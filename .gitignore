@@ -3,4 +3,4 @@
 /docker-compose.override.yml
 /api/public/data/*
 .idea/*
-/api/symfony.lock
+api/symfony.lock
