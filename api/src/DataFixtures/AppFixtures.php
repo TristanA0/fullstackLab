@@ -16,6 +16,7 @@ class AppFixtures extends Fixture
         if ($handle) {
             while (($buffer = fgets($handle, 4096)) !== false) {
                 $splitValue = explode("|", $buffer);
+                echo $splitValue[8] . "|" . $splitValue[9]. "|" . $splitValue[18]. "|" . $splitValue[36] . "\n";
             }
             if (!feof($handle)) {
                 echo "Erreur: fgets() failed\n";
