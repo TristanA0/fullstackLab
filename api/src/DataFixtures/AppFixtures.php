@@ -10,11 +10,8 @@ use \DateTime;
 
 class AppFixtures extends Fixture
 {
-    public function load(ObjectManager $manager)
-    {
-        $manager->getConnection()->getConfiguration()->setSQLLogger(null);
-
-        $handle = @fopen(__DIR__ . DIRECTORY_SEPARATOR."../../public/data/valeursfoncieres-2019.txt", "r");
+    private function loadData(ObjectManager $manager, string $fileName) {
+        $handle = @fopen($fileName, "r");
         if ($handle) {
             $i = 0;
             while (($buffer = fgets($handle, 4096)) !== false) {
@@ -88,6 +85,22 @@ class AppFixtures extends Fixture
             }
             fclose($handle);
         }
+    }
+
+    public function load(ObjectManager $manager)
+    {
+        $manager->getConnection()->getConfiguration()->setSQLLogger(null);
+
+        echo "load 2015...";
+        $this->loadData($manager, __DIR__ . DIRECTORY_SEPARATOR."../../public/data/valeursfoncieres-2015.txt");
+        echo "load 2016...";
+        $this->loadData($manager, __DIR__ . DIRECTORY_SEPARATOR."../../public/data/valeursfoncieres-2016.txt");
+        echo "load 2017...";
+        $this->loadData($manager, __DIR__ . DIRECTORY_SEPARATOR."../../public/data/valeursfoncieres-2017.txt");
+        echo "load 2018...";
+        $this->loadData($manager, __DIR__ . DIRECTORY_SEPARATOR."../../public/data/valeursfoncieres-2018.txt");
+        echo "load 2019...";
+        $this->loadData($manager, __DIR__ . DIRECTORY_SEPARATOR."../../public/data/valeursfoncieres-2019.txt");
 
         $manager->flush();
     }
