@@ -1,3 +1,5 @@
+Mettre les fichiers de données dans ./api/public/data/
+
 docker-compose pull
 
 docker-compose up -d
