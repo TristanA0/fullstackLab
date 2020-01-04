@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\PriceSquareMeter;
+use App\Entity\PropertyValue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method PriceSquareMeter|null find($id, $lockMode = null, $lockVersion = null)
- * @method PriceSquareMeter|null findOneBy(array $criteria, array $orderBy = null)
- * @method PriceSquareMeter[]    findAll()
- * @method PriceSquareMeter[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method PropertyValue|null find($id, $lockMode = null, $lockVersion = null)
+ * @method PropertyValue|null findOneBy(array $criteria, array $orderBy = null)
+ * @method PropertyValue[]    findAll()
+ * @method PropertyValue[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PriceSquareMeterRepository extends ServiceEntityRepository
+class PropertyValueRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, PriceSquareMeter::class);
+        parent::__construct($registry, PropertyValue::class);
     }
 
     // /**
-    //  * @return PriceSquareMeter[] Returns an array of PriceSquareMeter objects
+    //  * @return PropertyValue[] Returns an array of PropertyValue objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class PriceSquareMeterRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?PriceSquareMeter
+    public function findOneBySomeField($value): ?PropertyValue
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.exampleField = :val')
