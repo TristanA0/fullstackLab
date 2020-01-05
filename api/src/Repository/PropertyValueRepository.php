@@ -47,4 +47,19 @@ class PropertyValueRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findHouseAndApp()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "
+            SELECT * FROM PropertyValue p
+            WHERE p.Nature LIKE 'Vente' AND (p.Type LIKE 'Appartement' OR p.Type LIKE 'Maison')
+            ORDER BY p.Date ASC
+            ";
+        $stmt = $conn->prepare($sql);
+    
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetchAll();
+    }
 }

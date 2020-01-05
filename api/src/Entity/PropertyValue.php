@@ -6,7 +6,21 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(collectionOperations={
+ *     "get",
+ *     "meanprices"={
+ *         "method"="GET",
+ *         "path"="property_value/houseandapp",
+ *         "controller"=App\Controller\GetHouseAndApp::class,
+ *         "pagination_enabled"=false,
+ *         "read"= false,
+ *         "openapi_context"={
+ *              "summary"="Gets all propertyValue with nature 'Vente' and type 'Maison' or 'Appartement'",
+ *              "description"="Gets all propertyValue with nature 'Vente' and type 'Maison' or 'Appartement'",
+ *              "read"="false"
+ *          }
+ *     }
+ * })
  * @ORM\Entity(repositoryClass="App\Repository\PropertyValueRepository")
  */
 class PropertyValue
