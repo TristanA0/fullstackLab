@@ -31,6 +31,51 @@ use Doctrine\ORM\Mapping as ORM;
  *              "description"="Gets all sales for every regions",
  *              "read"="false"
  *          }
+ *     },
+ *     "salesByDates"={
+ *         "method"="GET",
+ *         "path"="property_value/sales_by_dates",
+ *         "controller"=App\Controller\GetSalesByDates::class,
+ *         "pagination_enabled"=false,
+ *         "read"= false,
+ *         "openapi_context"={
+ *              "summary"="Gets all sales for an interval",
+ *              "description"="Gets all sales for an interval",
+ *              "read"="false",
+ *              "parameters"={
+ *                  {
+ *                      "in"="query",
+ *                      "name"="interval",
+ *                      "required"= true,
+ *                      "schema"= {
+ *                          "type"="string",
+ *                          "enum"={"day","month","year"}
+ *                      },
+ *                      "example"="month"
+ *                  },
+ *                  {
+ *                      "in"="query",
+ *                      "name"="start",
+ *                      "required"= true,
+ *                      "schema"= {
+ *                          "type"="string",
+ *                          "format"="full-date"
+ *                      },
+ *                      "example"="2015-01-01"
+ *                  },
+ *                  {
+ *                      "in"="query",
+ *                      "name"="end",
+ *                      "required"= true,
+ *                      "schema"= {
+ *                          "type"="string",
+ *                          "format"="full-date"
+ *                      },
+ *                      "example"="2019-12-31"
+ *                  }
+ *              }
+ *          }
+ * 
  *     }
  * })
  * @ORM\Entity(repositoryClass="App\Repository\PropertyValueRepository")
