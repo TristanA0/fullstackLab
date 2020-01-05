@@ -10,13 +10,13 @@ use Doctrine\ORM\Mapping as ORM;
  *     "get",
  *     "meanprices"={
  *         "method"="GET",
- *         "path"="property_value/houseandapp",
- *         "controller"=App\Controller\GetHouseAndApp::class,
+ *         "path"="property_value/price_square_meter_by_month",
+ *         "controller"=App\Controller\GetPriceSquareMeterByMonth::class,
  *         "pagination_enabled"=false,
  *         "read"= false,
  *         "openapi_context"={
- *              "summary"="Gets all propertyValue with nature 'Vente' and type 'Maison' or 'Appartement'",
- *              "description"="Gets all propertyValue with nature 'Vente' and type 'Maison' or 'Appartement'",
+ *              "summary"="Gets all price square meter by month",
+ *              "description"="Gets all price square meter by month",
  *              "read"="false"
  *          }
  *     }

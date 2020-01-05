@@ -6,7 +6,7 @@ use App\Entity\PropertyValue;
 
 use Doctrine\ORM\EntityManagerInterface;
 
-class GetHouseAndApp
+class GetPriceSquareMeterByMonth
 {
     private $entityManager;
 
