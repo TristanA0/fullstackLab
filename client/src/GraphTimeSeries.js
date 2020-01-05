@@ -5,8 +5,14 @@ class GraphTimeSeries extends React.Component {
     componentDidMount() {
       this.draw();
     }
+
+    componentDidUpdate() {
+      this.draw();
+    }
       
     draw() {
+
+      const data = this.props.priceSquareMeter;
       
     }
           
