@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ApiResource(collectionOperations={
  *     "get",
- *     "meanprices"={
+ *     "priceSquareMeterByMonth"={
  *         "method"="GET",
  *         "path"="property_value/price_square_meter_by_month",
  *         "controller"=App\Controller\GetPriceSquareMeterByMonth::class,
@@ -17,6 +17,18 @@ use Doctrine\ORM\Mapping as ORM;
  *         "openapi_context"={
  *              "summary"="Gets all price square meter by month",
  *              "description"="Gets all price square meter by month",
+ *              "read"="false"
+ *          }
+ *     },
+ *     "salesByRegions"={
+ *         "method"="GET",
+ *         "path"="property_value/sales_by_regions",
+ *         "controller"=App\Controller\GetSalesByRegions::class,
+ *         "pagination_enabled"=false,
+ *         "read"= false,
+ *         "openapi_context"={
+ *              "summary"="Gets all sales for every regions",
+ *              "description"="Gets all sales for every regions",
  *              "read"="false"
  *          }
  *     }
