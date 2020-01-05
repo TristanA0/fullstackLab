@@ -3,7 +3,22 @@ import GraphTimeSeries from './GraphTimeSeries';
 
 class App extends React.Component {
     state = {
-        priceSquareMeter: []
+        priceSquareMeter: [],
+        isLoaded: false,
+        error: false
+    }
+
+    formatDate(d) {
+        var month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+    
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+            day = '0' + day;
+    
+        return [year, month, day].join('-');
     }
 
     componentDidMount() {
@@ -21,16 +36,16 @@ class App extends React.Component {
                 if (!(date.getFullYear() in value)) 
                     value[date.getFullYear()] = [];
 
-                value[date.getFullYear()][month] = price
+                value[date.getFullYear()][month] = price;
             }
-            obj.setState({ priceSquareMeter: value })
+            obj.setState({ priceSquareMeter: value, isLoaded: true, error: false });
         })
-        .catch(console.log)
+        .catch(err => { obj.setState({ priceSquareMeter: [], isLoaded: false, error: true }); })
     }
           
     render(){
       return (
-        <GraphTimeSeries priceSquareMeter={this.state.priceSquareMeter}/>
+        <GraphTimeSeries priceSquareMeter={this.state.priceSquareMeter} isLoaded={this.state.isLoaded} error={this.state.error}/>
       )
     }
   }
