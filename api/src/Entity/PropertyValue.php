@@ -7,9 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ApiResource()
- * @ORM\Entity(repositoryClass="App\Repository\PriceSquareMeterRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\PropertyValueRepository")
  */
-class PriceSquareMeter
+class PropertyValue
 {
     /**
      * @ORM\Id()
@@ -19,9 +19,14 @@ class PriceSquareMeter
     private $id;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      */
     private $date;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $nature;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -29,9 +34,14 @@ class PriceSquareMeter
     private $type;
 
     /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $region;
+
+    /**
      * @ORM\Column(type="float")
      */
-    private $price;
+    private $priceSquareMeter;
 
     public function getId(): ?int
     {
@@ -50,6 +60,18 @@ class PriceSquareMeter
         return $this;
     }
 
+    public function getNature(): ?string
+    {
+        return $this->nature;
+    }
+
+    public function setNature(string $nature): self
+    {
+        $this->nature = $nature;
+
+        return $this;
+    }
+
     public function getType(): ?string
     {
         return $this->type;
@@ -62,14 +84,26 @@ class PriceSquareMeter
         return $this;
     }
 
-    public function getPrice(): ?float
+    public function getRegion(): ?string
     {
-        return $this->price;
+        return $this->region;
     }
 
-    public function setPrice(float $price): self
+    public function setRegion(string $region): self
     {
-        $this->price = $price;
+        $this->region = $region;
+
+        return $this;
+    }
+
+    public function getPriceSquareMeter(): ?float
+    {
+        return $this->priceSquareMeter;
+    }
+
+    public function setPriceSquareMeter(float $priceSquareMeter): self
+    {
+        $this->priceSquareMeter = $priceSquareMeter;
 
         return $this;
     }
