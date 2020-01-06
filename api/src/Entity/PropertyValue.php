@@ -29,7 +29,18 @@ use Doctrine\ORM\Mapping as ORM;
  *         "openapi_context"={
  *              "summary"="Gets all sales for every regions",
  *              "description"="Gets all sales for every regions",
- *              "read"="false"
+ *              "read"="false",
+ *               "parameters"={
+ *                   {
+ *                      "in"="query",
+ *                      "name"="year",
+ *                      "required"= true,
+ *                      "schema"= {
+ *                          "type"="string"
+ *                      },
+ *                      "example"="2018"
+ *                  },
+ *               }
  *          }
  *     },
  *     "salesByDates"={
@@ -75,7 +86,7 @@ use Doctrine\ORM\Mapping as ORM;
  *                  }
  *              }
  *          }
- * 
+ *
  *     }
  * })
  * @ORM\Entity(repositoryClass="App\Repository\PropertyValueRepository")
