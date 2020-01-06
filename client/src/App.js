@@ -62,6 +62,22 @@ class App extends React.Component {
         })
         .catch(err => { obj.setState({ ...obj.state, error: true }); })
 
+        /*
+        fetch('https://localhost:8443/property_value/sales_by_regions')
+            .then(res => res.json())
+            .then((data) => {
+              let value = [];
+              for (let i in data["hydra:member"]) {
+                value[i] = {
+                  name : data["hydra:member"][i]["region"],
+                  value : data["hydra:member"][i]["sales"]
+                }
+              }
+              obj.setState({ ...obj.state, salesByRegions: value, isLoadedSalesByRegions : true, error: false });
+            })
+            .catch(err => { obj.setState({...obj.state, isLoadedSalesByRegions : false, error: true }); });
+        }*/
+
         obj.getDataSalesByDates();
     }
 
@@ -79,21 +95,6 @@ class App extends React.Component {
         this.setState({ ...this.state, salesInterval: [], isLoadedSalesInterval: false, salesIntervalEnd: event.target.value }, this.getDataSalesByDates);
     }
 
-        .catch(err => { obj.setState({ priceSquareMeter: [], salesByRegions: [], isLoadedSalesByRegions : false, isLoadedSquareMeter: false, error: true }); })
-        fetch('https://localhost:8443/property_value/sales_by_regions')
-          .then(res => res.json())
-          .then((data) => {
-            let value = [];
-            for (let i in data["hydra:member"]) {
-              value[i] = {
-                name : data["hydra:member"][i]["region"],
-                value : data["hydra:member"][i]["sales"]
-              }
-            }
-            obj.setState({ ...obj.state, salesByRegions: value, isLoadedSalesByRegions : true, error: false });
-          })
-          .catch(err => { obj.setState({...obj.state, isLoadedSalesByRegions : false, error: true }); });
-      }
 
     render(){
       return (
