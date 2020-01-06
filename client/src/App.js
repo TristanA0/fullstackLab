@@ -8,7 +8,37 @@ class App extends React.Component {
         priceSquareMeter: [],
         isLoadedSquareMeter: false,
         salesByRegions: [],
+        salesInterval: [],
+        salesIntervalType: "year",
+        salesIntervalStart: "2015-01-01",
+        salesIntervalEnd: "2019-12-31",
+        isLoadedSalesInterval: false,
         error: false
+    }
+
+    getDataSalesByDates() {
+      const obj = this;
+
+      fetch('https://localhost:8443/property_value/sales_by_dates?interval='+this.state.salesIntervalType+'&start='+this.state.salesIntervalStart+'&end='+this.state.salesIntervalEnd)
+      .then(res => res.json())
+      .then((data) => {
+          let value = [];
+          for (let i in data["hydra:member"]) {
+              let date = new Date(data["hydra:member"][i]["cur_date"].split(" ")[0]);
+              let sales = data["hydra:member"][i]["sales"];
+
+              let dateName = date.getFullYear();
+              if(this.state.salesIntervalType == "month")
+                dateName = date.getMonth()+1 + "/"+date.getFullYear();
+              if(this.state.salesIntervalType == "day")
+                dateName =date.getDate() + "/"+ date.getMonth()+1 + "/"+date.getFullYear();
+
+              let v = { "date": dateName, "value": sales }
+              value.push(v);
+          }
+          obj.setState({ ...obj.state, salesInterval: value, isLoadedSalesInterval: true });
+      })
+      .catch(err => { obj.setState({ ...obj.state, error: true }); })
     }
 
     componentDidMount() {
@@ -28,9 +58,25 @@ class App extends React.Component {
 
                 value[date.getFullYear()][month] = parseFloat(price);
             }
-            obj.setState({ priceSquareMeter: value, isLoadedSquareMeter: true, salesByRegions: [], error: false });
+            obj.setState({ ...obj.state, priceSquareMeter: value, isLoadedSquareMeter: true });
         })
-        .catch(err => { obj.setState({ priceSquareMeter: [], salesByRegions: [], isLoadedSquareMeter: false, error: true }); })
+        .catch(err => { obj.setState({ ...obj.state, error: true }); })
+
+        obj.getDataSalesByDates();
+    }
+
+    changeTypeInterval(event) {
+      this.setState({ ...this.state, salesInterval: [], isLoadedSalesInterval: false, salesIntervalType: event.target.value }, this.getDataSalesByDates);
+    }
+
+    changeStartInterval(event) {
+      if(event.target.value != "")
+        this.setState({ ...this.state, salesInterval: [], isLoadedSalesInterval: false, salesIntervalStart: event.target.value }, this.getDataSalesByDates);
+    }
+
+    changeEndInterval(event) {
+      if(event.target.value != "")
+        this.setState({ ...this.state, salesInterval: [], isLoadedSalesInterval: false, salesIntervalEnd: event.target.value }, this.getDataSalesByDates);
     }
 
     render(){
@@ -38,7 +84,23 @@ class App extends React.Component {
         <div>
             <GraphTimeSeries priceSquareMeter={this.state.priceSquareMeter} isLoaded={this.state.isLoadedSquareMeter} error={this.state.error}/>
             <SalesByRegions salesByRegions={this.state.salesByRegions} isLoaded={this.state.isLoadedSquareMeter} error={this.state.error}/>
-            <ChartBar isLoaded={this.state.isLoadedSquareMeter} error={this.state.error}/>
+
+            <h2> Vente par interval </h2>
+            <div>
+              <span> Vente par </span>
+              <select id="date" onChange={this.changeTypeInterval.bind(this)}>
+                <option value="year">Année</option>
+                <option value="month">Mois</option>
+                <option value="day">Jour</option>
+              </select>
+              <br/>
+              <span> Entre le </span>
+              <input type="date" defaultValue="2015-01-01" onChange={this.changeStartInterval.bind(this)}/>
+              <br/>
+              <span> Et le </span>
+              <input type="date" defaultValue="2019-12-31" onChange={this.changeEndInterval.bind(this)}/>
+            </div>
+            <ChartBar salesInterval={this.state.salesInterval} isLoaded={this.state.isLoadedSalesInterval} error={this.state.error}/>
         </div>
       )
     }

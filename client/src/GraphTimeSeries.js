@@ -10,7 +10,7 @@ class GraphTimeSeries extends React.Component {
       if(this.props.error) {
         d3.select("#graph-squaremeter").html("Error while request api");
       }
-      
+
     }
 
     componentDidUpdate() {
@@ -22,12 +22,12 @@ class GraphTimeSeries extends React.Component {
         d3.select("#graph-squaremeter").html("Error while request api");
       }
     }
-      
+
     draw() {
 
       const data = this.props.priceSquareMeter;
 
-      
+
       const width = 1000;
       const height = 1000;
       const numberElements = 60
@@ -35,7 +35,7 @@ class GraphTimeSeries extends React.Component {
 
       for (let i in data) {
         for (let index in data[i]) {
-          if(index != undefined) 
+          if(index !== undefined) 
             if(parseFloat(data[i][index]) > max)
               max = parseFloat(data[i][index]);
         };
@@ -55,7 +55,7 @@ class GraphTimeSeries extends React.Component {
       var yScale = d3.scaleLinear()
         .domain([0, max])
         .range([(height/2), 0]);
-              
+
       // Add scales to axis
       var xAxis = d3.axisBottom()
         .tickArguments([6])
@@ -80,7 +80,7 @@ class GraphTimeSeries extends React.Component {
       var count = 0;
       for (let i in data) {
         for (let index in data[i]) {
-          if(index != undefined) {
+          if(index !== undefined) {
             let x = ((width-100)/numberElements)*count;
             let y = height/2 - ((height/(2*max))*parseFloat(data[i][index]));
             dots[count++] = [x, y];
@@ -94,7 +94,7 @@ class GraphTimeSeries extends React.Component {
         .attr('d', path)
         .style("stroke", "#341EBF");
     }
-          
+
     render(){
       return (
         <div>
@@ -104,5 +104,5 @@ class GraphTimeSeries extends React.Component {
       )
     }
   }
-      
+
   export default GraphTimeSeries;

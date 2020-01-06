@@ -19,11 +19,11 @@ class GetPriceSquareMeterByMonth
     {
         $sql = "SELECT DATE_TRUNC('month', p.date) AS cur_date,
             AVG(p.priceSquareMeter) AS priceSquareM
-            FROM App:propertyValue p
+            FROM App:PropertyValue p
             WHERE p.priceSquareMeter <> -1 AND p.nature = 'Vente' AND p.type LIKE 'Appartement' OR p.type LIKE 'Maison'
             GROUP BY cur_date
             ORDER BY cur_date";
 
-        return $this->entityManager->createQuery($sql)->getResult();    
+        return $this->entityManager->createQuery($sql)->getResult();
     }
 }

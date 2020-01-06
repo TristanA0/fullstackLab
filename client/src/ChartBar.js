@@ -1,7 +1,7 @@
 import React from 'react';
 import * as d3 from 'd3';
 
-class GraphTimeSeries extends React.Component {
+class ChartBar extends React.Component {
     componentDidMount() {
       if(this.props.isLoaded) {
         this.draw();
@@ -24,9 +24,8 @@ class GraphTimeSeries extends React.Component {
     }
 
     draw() {
+      let data = this.props.salesInterval;
 
-      //const data = this.props.priceSquareMeter;
-      
       d3.select("#graph-chartbar").html("");
 
       var margin = {top: 20, right: 20, bottom: 30, left: 40},
@@ -54,22 +53,23 @@ class GraphTimeSeries extends React.Component {
 
       // format the data
       data.forEach(function(d) {
-        d.sales = +d.sales;
+        d.value = +d.value;
       });
 
       // Scale the range of the data in the domains
-      x.domain(data.map(function(d) { return d.salesperson; }));
-      y.domain([0, d3.max(data, function(d) { return d.sales; })]);
+      x.domain(data.map(function(d) { return d.date; }));
+      y.domain([0, d3.max(data, function(d) { return d.value; })]);
 
       // append the rectangles for the bar chart
       svg.selectAll(".bar")
           .data(data)
         .enter().append("rect")
           .attr("class", "bar")
-          .attr("x", function(d) { return x(d.salesperson); })
+          .attr("x", function(d) { return x(d.date); })
           .attr("width", x.bandwidth())
-          .attr("y", function(d) { return y(d.sales); })
-          .attr("height", function(d) { return height - y(d.sales); });
+          .attr("y", function(d) { return y(d.value); })
+          .attr("height", function(d) { return height - y(d.value); })
+          .style("fill", "#341EBF");
 
       // add the x Axis
       svg.append("g")
@@ -87,11 +87,10 @@ class GraphTimeSeries extends React.Component {
     render(){
       return (
           <div>
-            <h2>Vente par année entre 2015 et 2019</h2>
             <div id="graph-chartbar"><p>Loading...</p></div>
           </div>
       )
     }
   }
 
-  export default GraphTimeSeries;
+  export default ChartBar;
