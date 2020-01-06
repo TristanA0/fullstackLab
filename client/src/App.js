@@ -49,13 +49,14 @@ class App extends React.Component {
           .then((data) => {
             let value = [];
             for (let i in data["hydra:member"]) {
-              let region = data["hydra:member"][i]["region"];
-              value[region] = data["hydra:member"][i]["sales"];
-
+              value[i] = {
+                name : data["hydra:member"][i]["region"],
+                value : data["hydra:member"][i]["sales"]
+              }
             }
-            obj.setState({ ...this.state, salesByRegions: value, isLoadedSalesByRegions : true, error: false });
+            obj.setState({ ...obj.state, salesByRegions: value, isLoadedSalesByRegions : true, error: false });
           })
-          .catch(err => { obj.setState({...this.state, isLoadedSalesByRegions : false, error: true }); })
+          .catch(err => { obj.setState({...obj.state, isLoadedSalesByRegions : false, error: true }); });
       }
 
     render(){
