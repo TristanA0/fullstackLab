@@ -22,12 +22,12 @@ class GetSalesByDates
         $end = $data->query->get('end');
 
         $sql = "SELECT DATE_TRUNC('".$interval."', p.date) AS cur_date, COUNT(p.nature) AS sales
-                FROM App:propertyValue p
+                FROM App:PropertyValue p
                 WHERE p.nature = 'Vente' AND p.date BETWEEN '".$start."' AND '".$end."'
                 GROUP BY cur_date
                 ORDER BY cur_date";
 
         return $this->entityManager->createQuery($sql)->getResult();
-        
+
     }
 }

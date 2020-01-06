@@ -1,27 +1,44 @@
 import React from 'react';
 import GraphTimeSeries from './GraphTimeSeries';
 import SalesByRegions from './SalesByRegions';
+import ChartBar from './ChartBar';
 
 class App extends React.Component {
     state = {
         priceSquareMeter: [],
         isLoadedSquareMeter: false,
         salesByRegions: [],
-        isLoadedSalesByRegions: false,
+        salesInterval: [],
+        salesIntervalType: "year",
+        salesIntervalStart: "2015-01-01",
+        salesIntervalEnd: "2019-12-31",
+        isLoadedSalesInterval: false,
         error: false
     }
 
-    formatDate(d) {
-        var month = '' + (d.getMonth() + 1),
-            day = '' + d.getDate(),
-            year = d.getFullYear();
+    getDataSalesByDates() {
+      const obj = this;
 
-        if (month.length < 2)
-            month = '0' + month;
-        if (day.length < 2)
-            day = '0' + day;
+      fetch('https://localhost:8443/property_value/sales_by_dates?interval='+this.state.salesIntervalType+'&start='+this.state.salesIntervalStart+'&end='+this.state.salesIntervalEnd)
+      .then(res => res.json())
+      .then((data) => {
+          let value = [];
+          for (let i in data["hydra:member"]) {
+              let date = new Date(data["hydra:member"][i]["cur_date"].split(" ")[0]);
+              let sales = data["hydra:member"][i]["sales"];
 
-        return [year, month, day].join('-');
+              let dateName = date.getFullYear();
+              if(this.state.salesIntervalType == "month")
+                dateName = date.getMonth()+1 + "/"+date.getFullYear();
+              if(this.state.salesIntervalType == "day")
+                dateName =date.getDate() + "/"+ date.getMonth()+1 + "/"+date.getFullYear();
+
+              let v = { "date": dateName, "value": sales }
+              value.push(v);
+          }
+          obj.setState({ ...obj.state, salesInterval: value, isLoadedSalesInterval: true });
+      })
+      .catch(err => { obj.setState({ ...obj.state, error: true }); })
     }
 
     componentDidMount() {
@@ -32,17 +49,36 @@ class App extends React.Component {
         .then((data) => {
             let value = [];
             for (let i in data["hydra:member"]) {
-                let date = new Date(data["hydra:member"][i]["cur_date"]);
+                let date = new Date(data["hydra:member"][i]["cur_date"].split(" ")[0]);
                 let month = date.getMonth()+1;
                 let price = data["hydra:member"][i]["priceSquareM"];
 
                 if (!(date.getFullYear() in value))
                     value[date.getFullYear()] = [];
 
-                value[date.getFullYear()][month] = price;
+                value[date.getFullYear()][month] = parseFloat(price);
             }
-            obj.setState({ priceSquareMeter: value, isLoadedSquareMeter: true, salesByRegions: [], isLoadedSalesByRegions : false, error: false });
+            obj.setState({ ...obj.state, priceSquareMeter: value, isLoadedSquareMeter: true });
         })
+        .catch(err => { obj.setState({ ...obj.state, error: true }); })
+
+        obj.getDataSalesByDates();
+    }
+
+    changeTypeInterval(event) {
+      this.setState({ ...this.state, salesInterval: [], isLoadedSalesInterval: false, salesIntervalType: event.target.value }, this.getDataSalesByDates);
+    }
+
+    changeStartInterval(event) {
+      if(event.target.value != "")
+        this.setState({ ...this.state, salesInterval: [], isLoadedSalesInterval: false, salesIntervalStart: event.target.value }, this.getDataSalesByDates);
+    }
+
+    changeEndInterval(event) {
+      if(event.target.value != "")
+        this.setState({ ...this.state, salesInterval: [], isLoadedSalesInterval: false, salesIntervalEnd: event.target.value }, this.getDataSalesByDates);
+    }
+
         .catch(err => { obj.setState({ priceSquareMeter: [], salesByRegions: [], isLoadedSalesByRegions : false, isLoadedSquareMeter: false, error: true }); })
         fetch('https://localhost:8443/property_value/sales_by_regions')
           .then(res => res.json())
@@ -63,7 +99,24 @@ class App extends React.Component {
       return (
         <div>
             <GraphTimeSeries priceSquareMeter={this.state.priceSquareMeter} isLoaded={this.state.isLoadedSquareMeter} error={this.state.error}/>
-            <SalesByRegions salesByRegions={this.state.salesByRegions} isLoaded={this.state.isLoadedSalesByRegions} error={this.state.error}/>
+            <SalesByRegions salesByRegions={this.state.salesByRegions} isLoaded={this.state.isLoadedSquareMeter} error={this.state.error}/>
+
+            <h2> Vente par interval </h2>
+            <div>
+              <span> Vente par </span>
+              <select id="date" onChange={this.changeTypeInterval.bind(this)}>
+                <option value="year">Année</option>
+                <option value="month">Mois</option>
+                <option value="day">Jour</option>
+              </select>
+              <br/>
+              <span> Entre le </span>
+              <input type="date" defaultValue="2015-01-01" onChange={this.changeStartInterval.bind(this)}/>
+              <br/>
+              <span> Et le </span>
+              <input type="date" defaultValue="2019-12-31" onChange={this.changeEndInterval.bind(this)}/>
+            </div>
+            <ChartBar salesInterval={this.state.salesInterval} isLoaded={this.state.isLoadedSalesInterval} error={this.state.error}/>
         </div>
       )
     }
