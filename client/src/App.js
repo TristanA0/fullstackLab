@@ -13,6 +13,8 @@ class App extends React.Component {
         salesIntervalStart: "2015-01-01",
         salesIntervalEnd: "2019-12-31",
         isLoadedSalesInterval: false,
+        salesByRegionsYear : "2019",
+        isLoadedSalesByRegions: false,
         error: false
     }
 
@@ -41,6 +43,23 @@ class App extends React.Component {
       .catch(err => { obj.setState({ ...obj.state, error: true }); })
     }
 
+    getDataSalesByRegions() {
+      const obj = this;
+      fetch('https://localhost:8443/property_value/sales_by_regions?year='+obj.state.salesByRegionsYear)
+        .then(res => res.json())
+        .then((data) => {
+          let value = [];
+          for (let i in data["hydra:member"]) {
+            value[i] = {
+              name : data["hydra:member"][i]["region"],
+              value : data["hydra:member"][i]["sales"]
+            }
+          }
+          obj.setState({ ...obj.state, salesByRegions: value, isLoadedSalesByRegions : true });
+        })
+        .catch(err => { obj.setState({...obj.state, isLoadedSalesByRegions : false, error: true }); });
+    }
+
     componentDidMount() {
         const obj = this;
 
@@ -61,22 +80,7 @@ class App extends React.Component {
             obj.setState({ ...obj.state, priceSquareMeter: value, isLoadedSquareMeter: true });
         })
         .catch(err => { obj.setState({ ...obj.state, error: true }); })
-
-        /*
-        fetch('https://localhost:8443/property_value/sales_by_regions')
-            .then(res => res.json())
-            .then((data) => {
-              let value = [];
-              for (let i in data["hydra:member"]) {
-                value[i] = {
-                  name : data["hydra:member"][i]["region"],
-                  value : data["hydra:member"][i]["sales"]
-                }
-              }
-              obj.setState({ ...obj.state, salesByRegions: value, isLoadedSalesByRegions : true, error: false });
-            })
-            .catch(err => { obj.setState({...obj.state, isLoadedSalesByRegions : false, error: true }); });
-        }*/
+        obj.getDataSalesByRegions();
 
         obj.getDataSalesByDates();
     }
@@ -118,9 +122,18 @@ class App extends React.Component {
               <input type="date" defaultValue="2019-12-31" onChange={this.changeEndInterval.bind(this)}/>
             </div>
             <ChartBar salesInterval={this.state.salesInterval} isLoaded={this.state.isLoadedSalesInterval} error={this.state.error}/>
+          <span> Choisir année : </span>
+          <select id="annee" onChange={this.changeYear.bind(this)}>
+            <option value="2016">2016</option>
+            <option value="2017">2017</option>
+            <option value="2018">2018</option>
+            <option value="2019">2019</option>
+          </select>
         </div>
-      )
-    }
+        <SalesByRegions salesByRegions={this.state.salesByRegions} isLoaded={this.state.isLoadedSalesByRegions} error={this.state.error}/>
+      </div>
+    )
+  }
   }
 
   export default App;
