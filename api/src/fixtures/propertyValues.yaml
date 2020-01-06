@@ -1,0 +1,7 @@
+App\Entity\PropertyValue:
+    propertyValue_{1..200}:
+        date: <dateTime()>
+        nature: Vente
+        type: Maison
+        region: <numberBetween(0, 93)>
+        priceSquareMeter: <numberBetween(0, 10000)>
