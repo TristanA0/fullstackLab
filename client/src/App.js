@@ -31,9 +31,9 @@ class App extends React.Component {
 
               let dateName = date.getFullYear();
               if(this.state.salesIntervalType == "month")
-                dateName = date.getMonth()+1 + "/"+date.getFullYear();
+                dateName = ("0"+(date.getMonth()+1)).slice(-2) + "/"+date.getFullYear();
               if(this.state.salesIntervalType == "day")
-                dateName =date.getDate() + "/"+ date.getMonth()+1 + "/"+date.getFullYear();
+                dateName =("0"+date.getDate()).slice(-2) + "/"+ ("0"+(date.getMonth()+1)).slice(-2) + "/"+date.getFullYear();
 
               let v = { "date": dateName, "value": sales }
               value.push(v);
@@ -107,9 +107,8 @@ class App extends React.Component {
     render(){
       return (
         <div>
+            <h2>Prix moyen du m&#178;</h2>
             <GraphTimeSeries priceSquareMeter={this.state.priceSquareMeter} isLoaded={this.state.isLoadedSquareMeter} error={this.state.error}/>
-            <SalesByRegions salesByRegions={this.state.salesByRegions} isLoaded={this.state.isLoadedSquareMeter} error={this.state.error}/>
-
             <h2> Vente par interval </h2>
             <div>
               <span> Vente par </span>
@@ -126,6 +125,7 @@ class App extends React.Component {
               <input type="date" defaultValue="2019-12-31" onChange={this.changeEndInterval.bind(this)}/>
             </div>
             <ChartBar salesInterval={this.state.salesInterval} isLoaded={this.state.isLoadedSalesInterval} error={this.state.error}/>
+            <h2>Vente par regions</h2>
             <div>
               <span> Choisir année : </span>
               <select id="annee" onChange={this.changeYear.bind(this)}>

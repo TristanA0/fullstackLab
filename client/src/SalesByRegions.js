@@ -215,7 +215,6 @@ class SalesByRegions extends React.Component {
     render(){
       return (
         <div>
-          <h2>Vente par regions</h2>
           <div id="graph-regions"><p>Loading...</p></div>
         </div>
       )

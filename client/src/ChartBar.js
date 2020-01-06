@@ -9,7 +9,7 @@ class ChartBar extends React.Component {
       }
 
       if(this.props.error) {
-        d3.select("#graph-squaremeter").html("Error while request api");
+        d3.select("#graph-chartbar").html("Error while request api");
       }
 
     }
@@ -20,18 +20,17 @@ class ChartBar extends React.Component {
       }
 
       if(this.props.error) {
-        d3.select("#graph-squaremeter").html("Error while request api");
+        d3.select("#graph-chartbar").html("Error while request api");
       }
     }
 
     draw() {
       let data = this.props.salesInterval;
-      console.log(data.length);
 
       d3.select("#graph-chartbar").html("");
       d3.select("#tooltip-chartbar").html("");
 
-      var margin = {top: 20, right: 20, bottom: 30, left: 40},
+      var margin = {top: 20, right: 20, bottom: 30, left: 100},
           width = 960 - margin.left - margin.right,
           height = 500 - margin.top - margin.bottom;
 
@@ -75,9 +74,7 @@ class ChartBar extends React.Component {
       });
 
       // Scale the range of the data in the domains
-      //if(data.length <= 10 ) {
-        x.domain(data.map(function(d) { return d.date; }));
-      //}
+      x.domain(data.map(function(d) { return d.date; }));
       y.domain([0, d3.max(data, function(d) { return d.value; })]);
 
       // append the rectangles for the bar chart
