@@ -14,3 +14,37 @@
   font: 12px sans-serif;
   max-width: 300px;
 }
+
+#menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #4b5161;
+}
+
+#menu li {
+  float: right;
+  border-right: 1px solid #0726bf;
+  height: 50%;
+}
+
+#menu li:last-of-type {
+  border-left: 1px solid #0726bf;
+}
+
+#menu li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+#menu li a:hover:not(.active) {
+  background-color: #31319a;
+}
+
+#menu .active {
+  background-color: #4CAF50;
+}

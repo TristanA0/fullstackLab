@@ -2,6 +2,7 @@ import React from 'react';
 import GraphTimeSeries from './GraphTimeSeries';
 import SalesByRegions from './SalesByRegions';
 import ChartBar from './ChartBar';
+import Menu from './Menu';
 
 class App extends React.Component {
     state = {
@@ -107,6 +108,7 @@ class App extends React.Component {
     render(){
       return (
         <div>
+            <Menu />
             <h2>Prix moyen du m&#178;</h2>
             <GraphTimeSeries priceSquareMeter={this.state.priceSquareMeter} isLoaded={this.state.isLoadedSquareMeter} error={this.state.error}/>
             <h2> Vente par interval </h2>
