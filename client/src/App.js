@@ -99,6 +99,10 @@ class App extends React.Component {
         this.setState({ ...this.state, salesInterval: [], isLoadedSalesInterval: false, salesIntervalEnd: event.target.value }, this.getDataSalesByDates);
     }
 
+    changeYear(event) {
+      this.setState({ ...this.state, salesByRegions: [], isLoadedSalesByRegions: false, salesByRegionsYear: event.target.value }, this.getDataSalesByRegions);
+    }
+
 
     render(){
       return (
@@ -122,15 +126,16 @@ class App extends React.Component {
               <input type="date" defaultValue="2019-12-31" onChange={this.changeEndInterval.bind(this)}/>
             </div>
             <ChartBar salesInterval={this.state.salesInterval} isLoaded={this.state.isLoadedSalesInterval} error={this.state.error}/>
-          <span> Choisir année : </span>
-          <select id="annee" onChange={this.changeYear.bind(this)}>
-            <option value="2016">2016</option>
-            <option value="2017">2017</option>
-            <option value="2018">2018</option>
-            <option value="2019">2019</option>
-          </select>
-        </div>
-        <SalesByRegions salesByRegions={this.state.salesByRegions} isLoaded={this.state.isLoadedSalesByRegions} error={this.state.error}/>
+            <div>
+              <span> Choisir année : </span>
+              <select id="annee" onChange={this.changeYear.bind(this)}>
+                <option value="2016">2016</option>
+                <option value="2017">2017</option>
+                <option value="2018">2018</option>
+                <option value="2019">2019</option>
+              </select>
+            </div>
+            <SalesByRegions salesByRegions={this.state.salesByRegions} isLoaded={this.state.isLoadedSalesByRegions} error={this.state.error}/>
       </div>
     )
   }
