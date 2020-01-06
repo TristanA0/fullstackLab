@@ -142,6 +142,8 @@ class SalesByRegions extends React.Component {
       var radius = Math.min(width, height) / 2;
       var color = d3.scaleOrdinal(d3.schemeCategory10);
 
+      d3.select("#graph-regions").html("");
+
       var svg = d3.select("#graph-regions")
         .append('svg')
         .attr('class', 'pie')
