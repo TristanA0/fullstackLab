@@ -19,10 +19,10 @@ class GetSalesByRegions
     {
         $sql = "SELECT p.region as region,
             COUNT(p.region) AS sales
-            FROM App:propertyValue p
+            FROM App:PropertyValue p
             WHERE p.nature = 'Vente'
             GROUP BY region";
 
-        return $this->entityManager->createQuery($sql)->getResult();    
+        return $this->entityManager->createQuery($sql)->getResult();
     }
 }
