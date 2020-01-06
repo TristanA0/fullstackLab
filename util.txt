@@ -1,0 +1,11 @@
+Mettre les fichiers de données dans ./api/public/data/
+
+docker-compose pull
+
+docker-compose up -d
+
+docker-compose logs -f
+
+docker-compose exec php bin/console doctrine:schema:update --force
+
+docker-compose exec php bin/console doctrine:fixtures:load
