@@ -28,6 +28,6 @@ class GetSalesByDates
                 ORDER BY cur_date";
 
         return $this->entityManager->createQuery($sql)->getResult();
-        
+
     }
 }
