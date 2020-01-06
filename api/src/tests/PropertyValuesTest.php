@@ -42,6 +42,68 @@ class PropertyValuesTest extends ApiTestCase
         $this->assertMatchesResourceCollectionJsonSchema(PropertyValue::class);
     }
 
+    public function testGetSalesByRegion(): void
+    {
+        // The client implements Symfony HttpClient's `HttpClientInterface`, and the response `ResponseInterface`
+        $response = static::createClient()->request('GET', '/property_value/sales_by_regions?year=2018');
+
+        $this->assertResponseIsSuccessful();
+        // Asserts that the returned content type is JSON-LD (the default)
+        $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
+
+        // Asserts that the returned JSON is a superset of this one
+        $this->assertJsonContains([
+            '@context' => '/contexts/PropertyValue',
+            '@id' => '/property_values',
+            '@type' => 'hydra:Collection',
+            'hydra:view' => [
+                '@id' => '/property_value/sales_by_regions?year=2018',
+                '@type' => 'hydra:PartialCollectionView',
+            ],
+        ]);
+
+    }
+
+    public function testGetPriceSquareMeterByMonth(): void
+    {
+        // The client implements Symfony HttpClient's `HttpClientInterface`, and the response `ResponseInterface`
+        $response = static::createClient()->request('GET', '/property_value/price_square_meter_by_month');
+
+        $this->assertResponseIsSuccessful();
+        // Asserts that the returned content type is JSON-LD (the default)
+        $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
+
+        // Asserts that the returned JSON is a superset of this one
+        $this->assertJsonContains([
+            '@context' => '/contexts/PropertyValue',
+            '@id' => '/property_values',
+            '@type' => 'hydra:Collection'
+        ]);
+
+    }
+
+    public function testGetSalesByDates(): void
+    {
+        // The client implements Symfony HttpClient's `HttpClientInterface`, and the response `ResponseInterface`
+        $response = static::createClient()->request('GET', '/property_value/sales_by_dates?interval=month&start=2015-01-01&end=2019-12-31');
+
+        $this->assertResponseIsSuccessful();
+        // Asserts that the returned content type is JSON-LD (the default)
+        $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
+
+        // Asserts that the returned JSON is a superset of this one
+        $this->assertJsonContains([
+            '@context' => '/contexts/PropertyValue',
+            '@id' => '/property_values',
+            '@type' => 'hydra:Collection',
+            'hydra:view' => [
+                '@id' => '/property_value/sales_by_dates?interval=month&start=2015-01-01&end=2019-12-31',
+                '@type' => 'hydra:PartialCollectionView',
+            ],
+        ]);
+
+    }
+
     public function testUpdatePropertyValue(): void
     {
         $client = static::createClient();
