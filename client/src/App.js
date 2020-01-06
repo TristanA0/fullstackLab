@@ -1,10 +1,12 @@
 import React from 'react';
 import GraphTimeSeries from './GraphTimeSeries';
+import SalesByRegions from './SalesByRegions';
 
 class App extends React.Component {
     state = {
         priceSquareMeter: [],
-        isLoaded: false,
+        isLoadedSquareMeter: false,
+        salesByRegions: [],
         error: false
     }
 
@@ -38,14 +40,17 @@ class App extends React.Component {
 
                 value[date.getFullYear()][month] = price;
             }
-            obj.setState({ priceSquareMeter: value, isLoaded: true, error: false });
+            obj.setState({ priceSquareMeter: value, isLoadedSquareMeter: true, salesByRegions: [], error: false });
         })
-        .catch(err => { obj.setState({ priceSquareMeter: [], isLoaded: false, error: true }); })
+        .catch(err => { obj.setState({ priceSquareMeter: [], salesByRegions: [], isLoadedSquareMeter: false, error: true }); })
     }
           
     render(){
       return (
-        <GraphTimeSeries priceSquareMeter={this.state.priceSquareMeter} isLoaded={this.state.isLoaded} error={this.state.error}/>
+        <div>
+            <GraphTimeSeries priceSquareMeter={this.state.priceSquareMeter} isLoaded={this.state.isLoadedSquareMeter} error={this.state.error}/>
+            <SalesByRegions salesByRegions={this.state.salesByRegions} isLoaded={this.state.isLoadedSquareMeter} error={this.state.error}/>
+        </div>
       )
     }
   }
