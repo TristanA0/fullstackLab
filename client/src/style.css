@@ -49,17 +49,17 @@
   background-color: #4CAF50;
 }
 
-.graph {
-  margin-top: 20px;
-  margin-left: auto;
-  margin-right: auto;
-  width: auto;
-  width: fit-content;
+.graph-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
 }
 
-.graph div {
-  width: auto;
-  width: fit-content;
+.params {
+    display: flex;
+    flex-direction: column;
+    width : 20%;
+    margin: auto;
 }
 
 .sep {
