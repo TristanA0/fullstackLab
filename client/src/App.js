@@ -141,6 +141,7 @@ class App extends React.Component {
               <div class="params">
                 <span> Choisir année : </span>
                 <select id="annee" onChange={this.changeYear.bind(this)}>
+                  <option value="2015">2015</option>
                   <option value="2016">2016</option>
                   <option value="2017">2017</option>
                   <option value="2018">2018</option>
