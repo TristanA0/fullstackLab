@@ -1,5 +1,5 @@
 <?php
-namespace App\Tests;
+namespace App\tests;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use App\Entity\PropertyValue;
