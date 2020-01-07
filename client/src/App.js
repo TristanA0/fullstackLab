@@ -108,45 +108,52 @@ class App extends React.Component {
     render(){
       return (
         <div>
-            <Menu />
+          <Menu />
+          <div class="graph-container">
             <div class="graph">
               <h2>Prix moyen du m&#178;</h2>
-              <GraphTimeSeries priceSquareMeter={this.state.priceSquareMeter} isLoaded={this.state.isLoadedSquareMeter} error={this.state.error}/>
+              <div class="graph-render">
+                <GraphTimeSeries priceSquareMeter={this.state.priceSquareMeter} isLoaded={this.state.isLoadedSquareMeter} error={this.state.error}/>
+              </div>
             </div>
             <div class="sep"></div>
             <div class="graph">
               <h2> Vente par interval </h2>
-              <div>
+              <div class="params">
                 <span> Vente par </span>
                 <select id="date" onChange={this.changeTypeInterval.bind(this)}>
                   <option value="year">Année</option>
                   <option value="month">Mois</option>
                   <option value="day">Jour</option>
                 </select>
-                <br/>
                 <span> Entre le </span>
                 <input type="date" defaultValue="2015-01-01" onChange={this.changeStartInterval.bind(this)}/>
-                <br/>
                 <span> Et le </span>
                 <input type="date" defaultValue="2019-12-31" onChange={this.changeEndInterval.bind(this)}/>
               </div>
-              <ChartBar salesInterval={this.state.salesInterval} isLoaded={this.state.isLoadedSalesInterval} error={this.state.error}/>
+              <div class="graph-render" >
+                <ChartBar salesInterval={this.state.salesInterval} isLoaded={this.state.isLoadedSalesInterval} error={this.state.error}/>
+              </div>
             </div>
             <div class="sep"></div>
             <div class="graph">
               <h2>Vente par regions</h2>
-              <div>
+              <div class="params">
                 <span> Choisir année : </span>
                 <select id="annee" onChange={this.changeYear.bind(this)}>
+                  <option value="2015">2015</option>
                   <option value="2016">2016</option>
                   <option value="2017">2017</option>
                   <option value="2018">2018</option>
                   <option value="2019">2019</option>
                 </select>
               </div>
-              <SalesByRegions salesByRegions={this.state.salesByRegions} isLoaded={this.state.isLoadedSalesByRegions} error={this.state.error}/>
+              <div class="graph-render" >
+                <SalesByRegions salesByRegions={this.state.salesByRegions} isLoaded={this.state.isLoadedSalesByRegions} error={this.state.error}/>
+              </div>
             </div>
-      </div>
+          </div>
+        </div>
     )
   }
   }

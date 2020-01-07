@@ -105,9 +105,33 @@ const departements = {
   "976": "Mayotte"
 };
 
+let colors = [
+  "#5151ff",
+  "#4949f8",
+  "#4141e1",
+  "#4343dc",
+  "#3131c8",
+  "#2a2abe",
+  "#3434b9",
+  "#3333b4",
+  "#3232af",
+  "#3333aa",
+  "#3434a0",
+  "#30309b",
+  "#2f2f93",
+  "#292991",
+  "#2d2d87",
+  "#28287d",
+  "#242473",
+  "#222269",
+]
+
 
 //https://observablehq.com/@d3/pie-chart
 class SalesByRegions extends React.Component {
+    constructor() {
+      super();
+    }
     componentDidMount() {
       if(this.props.isLoaded) {
         this.draw();
@@ -130,6 +154,7 @@ class SalesByRegions extends React.Component {
     }
 
     draw() {
+      console.log(colors);
       const data = this.props.salesByRegions;
 
       var text = "";
@@ -137,10 +162,10 @@ class SalesByRegions extends React.Component {
       var width = 500;
       var height = 500;
       var thickness = 40;
-      var duration = 750;
 
       var radius = Math.min(width, height) / 2;
-      var color = d3.scaleOrdinal(d3.schemeCategory10);
+      var color = d3.scaleOrdinal()
+        .range(colors);
 
       d3.select("#graph-regions").html("");
 
