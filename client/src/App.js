@@ -112,7 +112,9 @@ class App extends React.Component {
           <div class="graph-container">
             <div class="graph">
               <h2>Prix moyen du m&#178;</h2>
-              <GraphTimeSeries priceSquareMeter={this.state.priceSquareMeter} isLoaded={this.state.isLoadedSquareMeter} error={this.state.error}/>
+              <div class="graph-render">
+                <GraphTimeSeries priceSquareMeter={this.state.priceSquareMeter} isLoaded={this.state.isLoadedSquareMeter} error={this.state.error}/>
+              </div>
             </div>
             <div class="sep"></div>
             <div class="graph">
@@ -129,7 +131,9 @@ class App extends React.Component {
                 <span> Et le </span>
                 <input type="date" defaultValue="2019-12-31" onChange={this.changeEndInterval.bind(this)}/>
               </div>
-              <ChartBar salesInterval={this.state.salesInterval} isLoaded={this.state.isLoadedSalesInterval} error={this.state.error}/>
+              <div class="graph-render" >
+                <ChartBar salesInterval={this.state.salesInterval} isLoaded={this.state.isLoadedSalesInterval} error={this.state.error}/>
+              </div>
             </div>
             <div class="sep"></div>
             <div class="graph">
@@ -143,7 +147,9 @@ class App extends React.Component {
                   <option value="2019">2019</option>
                 </select>
               </div>
-              <SalesByRegions salesByRegions={this.state.salesByRegions} isLoaded={this.state.isLoadedSalesByRegions} error={this.state.error}/>
+              <div class="graph-render" >
+                <SalesByRegions salesByRegions={this.state.salesByRegions} isLoaded={this.state.isLoadedSalesByRegions} error={this.state.error}/>
+              </div>
             </div>
           </div>
         </div>
